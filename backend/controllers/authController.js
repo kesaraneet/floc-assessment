@@ -1,14 +1,16 @@
-import { db } from "../firebase.js";
 import jwt from "jsonwebtoken";
-import config from "../config.js";
 import bcrypt from "bcrypt";
 
-const SignIn = async (req, res, next) => {
+import { db } from "../firebase.js";
+import config from "../config.js";
+
+const SignIn = async (req, res) => {
   try {
     const { username, password } = req.body;
     const emailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     let user;
+
     if (emailReg.test(username)) {
       user = await db.collection("users").where("email", "==", username).get();
     } else {
@@ -37,4 +39,21 @@ const SignIn = async (req, res, next) => {
   }
 };
 
-export { SignIn };
+const VerifyToken = (req, res) => {
+  const { token } = req.body;
+
+  if (token.empty) {
+    return res.status(401).send("No token.");
+  }
+
+  jwt.verify(token, config.jwt.access_token, async (err, decoded) => {
+    if (err) return res.status(403).send("Forbidden.");
+
+    const foundUser = await db.collection("users").where("username", "==", decoded.username).where("email", "==", decoded.email).get();
+    if (!foundUser) return res.status(401).send("Invalid token.");
+
+    return res.send({ token: token, permission: decoded.permission, email: decoded.email, username: decoded.username });
+  });
+};
+
+export { SignIn, VerifyToken };

@@ -14,7 +14,7 @@ const createUser = async (req, res, next) => {
     await db.collection("users").doc().set({
       username: username,
       password: hashPassword,
-      email: email, // TODO: hash password
+      email: email,
       role: role,
     });
     res.status(201).send("User created successfuly.");
