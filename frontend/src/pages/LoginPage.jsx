@@ -13,9 +13,28 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
+  useEffect(
+    () =>
+      async function verifyToken() {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+          try {
+            const response = await axios.post(
+              "/auth/verifyToken",
+              { token: localStorage.getItem("accessToken") },
+              { headers: { "Content-Type": "application/json" } }
+            );
+            const accessToken = response?.data?.token;
+            const permission = response?.data?.permission;
+            const email = response?.data?.email;
+            const user_username = response?.data?.username;
+            setAuth({ user_username, password, email, permission, accessToken });
+            navigate("/product");
+          } catch (error) {}
+        }
+      },
+    []
+  );
 
   useEffect(() => {
     setErrMsg("");
@@ -52,7 +71,6 @@ function LoginPage() {
         setErrMsg("Username or password are incorrect.");
       } else {
         setErrMsg("Login failed.");
-        errRef.current.focus();
       }
     }
   };

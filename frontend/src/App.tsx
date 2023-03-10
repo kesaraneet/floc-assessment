@@ -9,13 +9,16 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" index element={<LoginPage />} />
-        {/* Protected Route */}
+
         <Route element={<RequiredAuth allowedPermission={["read"]} />}>
           <Route path="/product" element={<ProductPage />} />
         </Route>
+
         <Route element={<RequiredAuth allowedPermission={["read", "write"]} />}>
           <Route path="/edit/:id" element={<EditProductDetailPage />} />
         </Route>
+
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );

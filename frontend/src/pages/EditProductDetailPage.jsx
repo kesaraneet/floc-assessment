@@ -55,6 +55,9 @@ function EditProductDetailPage() {
         `product/${id}`,
         {
           product_title_th: productTitleTH,
+          product_title_en: productTitleEN,
+          price: price,
+          description: description,
         },
         {
           headers: {

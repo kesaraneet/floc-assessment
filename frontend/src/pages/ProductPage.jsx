@@ -2,10 +2,13 @@ import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 function ProductPage() {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
+  const [editBtnDisable, setEditBtnDisable] = useState(true);
 
   useEffect(
     () =>
@@ -20,6 +23,15 @@ function ProductPage() {
       },
     []
   );
+
+  useEffect(() => {
+    const EDIT_PRODUCT_PERMISSION = ["read", "write"];
+    const myPermission = auth?.permission;
+    const isAllowed = EDIT_PRODUCT_PERMISSION.every((p) => {
+      return myPermission?.includes(p);
+    });
+    setEditBtnDisable(!isAllowed);
+  }, [auth]);
 
   return (
     <div>
@@ -50,16 +62,19 @@ function ProductPage() {
                 <td scope="row" className="px-6 py-4 whitespace-nowrap">
                   <img className="h-20 w-20" src={product.image}></img>
                 </td>
-                <td className="px-6 py-4">{product.product_title_th}</td>
-                <td className="px-6 py-4">{product.product_title_en}</td>
+                <td className="px-6 py-4">{product.title_th}</td>
+                <td className="px-6 py-4">{product.title_en}</td>
                 <td className="px-6 py-4 max-w-md">{product.description}</td>
                 <td className="px-6 py-4">{product.price ? product.price : `-`} THB</td>
                 <td className="px-6 py-4">
                   <button
-                    className=" text-white bg-slate-500 hover:bg-slate-600 px-3 py-1 rounded-xl hover:"
+                    className={
+                      " text-white bg-slate-500 px-3 py-1 rounded-xl hover:bg-slate-700 disabled:bg-slate-800 disabled:cursor-not-allowed"
+                    }
                     onClick={() => {
                       navigate(`/edit/${product.id}`, { id: product.id });
                     }}
+                    disabled={editBtnDisable}
                   >
                     Edit
                   </button>

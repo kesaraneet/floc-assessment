@@ -17,8 +17,8 @@ const NavBar = () => {
   return (
     <nav className="flex bg-slate-300 p-6 items-center justify-between">
       <div className="flex-col items-left  text-slate-700">
-        <p>User: {auth.user_username ? auth.user_username : localStorage.getItem("username")}</p>
-        <p>Email: {auth.email ? auth.email : localStorage.getItem("email")}</p>
+        <p>User: {localStorage.getItem("username")}</p>
+        <p>Email: {localStorage.getItem("email")}</p>
       </div>
       <div className="text-right">
         <form onSubmit={handleLogout}>
