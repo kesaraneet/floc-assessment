@@ -1,8 +1,11 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
+
 dotenv.config();
 
-const { PORT, HOST, HOST_URL } = process.env;
 const {
+  PORT,
+  HOST,
+  HOST_URL,
   TYPE,
   PROJECT_ID,
   PRIVATE_KEY_ID,
@@ -13,12 +16,16 @@ const {
   TOKEN_URI,
   AUTH_PROVIDER_X509_CERT_URL,
   CLIENT_X509_CERT_URL,
+  ACCESS_TOKEN_SECRET,
 } = process.env;
 
-module.exports = {
+export default {
   port: PORT,
   host: HOST,
   url: HOST_URL,
+  jwt: {
+    access_token: ACCESS_TOKEN_SECRET,
+  },
   firebaseConfig: {
     type: TYPE,
     project_id: PROJECT_ID,

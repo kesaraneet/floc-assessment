@@ -1,10 +1,10 @@
-const firestore = require("../db");
-const Product = require("../models/product");
+import { db } from "../firebase.js";
+import Product from "../models/product.js";
 
 const addProduct = async (req, res, next) => {
   try {
     const data = req.body;
-    await firestore.collection("products").doc().set(data);
+    await db.collection("products").doc().set(data);
     res.send("Product added.");
   } catch (error) {
     res.status(400).send(error.message);
@@ -13,7 +13,7 @@ const addProduct = async (req, res, next) => {
 
 const getAllProduct = async (req, res, next) => {
   try {
-    const productsRef = firestore.collection("products");
+    const productsRef = db.collection("products");
     const products = await productsRef.get();
     let productArr = [];
 
@@ -37,7 +37,7 @@ const getAllProduct = async (req, res, next) => {
 const getProduct = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const product = await firestore.collection("products").doc(id);
+    const product = await db.collection("products").doc(id);
     const data = await product.get();
 
     if (!data.exists) {
@@ -55,7 +55,7 @@ const updateProduct = async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
 
-    const product = await firestore.collection("products").doc(id);
+    const product = await db.collection("products").doc(id);
     await product.update(data);
 
     res.send("Product updated successfuly");
@@ -67,7 +67,6 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   try {
     const id = req.params.id;
-    console.log(id);
     await firestore.collection("products").doc(id).delete();
 
     res.send("Product deleted successfuly");
@@ -76,10 +75,4 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  addProduct,
-  getAllProduct,
-  getProduct,
-  updateProduct,
-  deleteProduct,
-};
+export { addProduct, getAllProduct, getProduct, updateProduct, deleteProduct };

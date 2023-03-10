@@ -1,14 +1,18 @@
-const express = require("express");
-const { addProduct, getAllProduct, getProduct, updateProduct, deleteProduct } = require("../controllers/productController");
+import express from "express";
+import { addProduct, getAllProduct, getProduct, updateProduct, deleteProduct } from "../controllers/productController.js";
+import authenJWT from "../middleware/authenJWT.js";
+import authorizeJWT from "../middleware/authorizeJWT.js";
 
 const router = express.Router();
 
-router.get("/", getAllProduct);
-router.get("/:id", getProduct);
-router.post("/", addProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.use(authenJWT);
 
-module.exports = {
+router.get("/", authorizeJWT("read"), getAllProduct);
+router.get("/:id", authorizeJWT("read"), getProduct);
+router.post("/", authorizeJWT("read", "write"), addProduct);
+router.put("/:id", authorizeJWT("read", "write"), updateProduct);
+router.delete("/:id", authorizeJWT("read", "write"), deleteProduct);
+
+export default {
   routes: router,
 };
