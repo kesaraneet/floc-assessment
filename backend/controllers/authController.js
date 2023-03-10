@@ -1,6 +1,7 @@
 import { db } from "../firebase.js";
 import jwt from "jsonwebtoken";
 import config from "../config.js";
+import bcrypt from "bcrypt";
 
 const SignIn = async (req, res, next) => {
   try {
@@ -26,7 +27,7 @@ const SignIn = async (req, res, next) => {
         const token = jwt.sign({ username: username, email: data.email, permission: data.permission }, config.jwt.access_token, {
           expiresIn: "2h",
         });
-        return res.send({ token: token, permission: data.permission });
+        return res.send({ token: token, permission: data.permission, email: data.email, username: data.username });
       } else {
         return res.status(401).send(`Username/Email and Password doesn't match.`);
       }
@@ -35,23 +36,5 @@ const SignIn = async (req, res, next) => {
     return res.status(400).send(error.message);
   }
 };
-
-// TODO: Implement Refresh Token
-// const RefreshSignIn = (req, res) => {
-//   const { token } = req.body;
-
-//   if (token.empty) {
-//     return res.status(401).send("Please Sign-in again.");
-//   }
-
-//   jwt.verify(token, config.jwt.access_token, async (err, decoded) => {
-//     if (err) return res.status(403).send("Forbidden.");
-
-//     const foundUser = await db.collection("users").where("username", "==", decoded.username).where("email", "==", decoded.email).get();
-//     if (!foundUser) return res.status(401).send("Invalid token.");
-
-//     return res.send({ token: token, permission: decoded.permission });
-//   });
-// };
 
 export { SignIn };

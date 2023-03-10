@@ -13,6 +13,8 @@ const authenJWT = (req, res, next) => {
     if (err) return res.status(403).send("Forbidden.");
     req.user = decoded.username;
     req.permission = decoded.permission;
+    req.email = decoded.email;
+    req.username = decoded.username;
     next();
   });
 };

@@ -24,7 +24,7 @@ const getAllProduct = async (req, res, next) => {
     products.forEach((doc) => {
       let product = doc.data();
       productArr.push(
-        new Product(doc.id, product.productTitleTH, product.productTitleEN, product.price, product.description, product.image)
+        new Product(doc.id, product.product_title_th, product.product_title_en, product.price, product.description, product.image)
       );
     });
 
@@ -67,7 +67,7 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   try {
     const id = req.params.id;
-    await firestore.collection("products").doc(id).delete();
+    await db.collection("products").doc(id).delete();
 
     res.send("Product deleted successfuly");
   } catch (error) {
