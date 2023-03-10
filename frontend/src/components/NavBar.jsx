@@ -10,6 +10,7 @@ const NavBar = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     localStorage.removeItem("accessToken");
+
     setAuth({});
     navigate("/");
   };

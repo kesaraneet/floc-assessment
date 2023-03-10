@@ -23,8 +23,8 @@ function EditProductDetailPage() {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         });
-        setProductTitleTH(res?.data?.product_title_th);
-        setProductTitleEN(res?.data?.product_title_en);
+        setProductTitleTH(res?.data?.title_th);
+        setProductTitleEN(res?.data?.title_en);
         setImage(res?.data?.image);
         setPrice(res?.data?.price);
         setDescription(res?.data?.description);
@@ -54,8 +54,8 @@ function EditProductDetailPage() {
       const res = await axios.put(
         `product/${id}`,
         {
-          product_title_th: productTitleTH,
-          product_title_en: productTitleEN,
+          title_th: productTitleTH,
+          title_en: productTitleEN,
           price: price,
           description: description,
         },
@@ -70,6 +70,16 @@ function EditProductDetailPage() {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async function handlePictureSelected(event) {
+    var picture = event.target.files[0];
+    var src = URL.createObjectURL(picture);
+
+    this.setState({
+      picture: picture,
+      src: src,
+    });
   }
 
   return (
