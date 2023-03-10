@@ -100,7 +100,7 @@ function EditProductDetailPage() {
             <div className="flex flex-row items-center my-5">
               <p className="w-1/3">Product Title (Thai)</p>
               <input
-                className="w-2/3 border border-slate-300 rounded-xl shadow-sm"
+                className="px-3 py-1 w-2/3 border border-slate-300 rounded-xl shadow-sm"
                 type="text"
                 name="productTitleTH"
                 value={productTitleTH}
@@ -111,7 +111,7 @@ function EditProductDetailPage() {
             <div className="flex flex-row items-center my-5">
               <p className="w-1/3">Product Title (English)</p>
               <input
-                className="w-2/3 border border-slate-300 rounded-xl shadow-sm"
+                className="px-3 py-1 w-2/3 border border-slate-300 rounded-xl shadow-sm"
                 type="text"
                 name="productTitleEN"
                 value={productTitleEN}
@@ -122,7 +122,7 @@ function EditProductDetailPage() {
             <div className="flex flex-row items-center my-5">
               <p className="w-1/3">Price</p>
               <input
-                className="w-2/3 border border-slate-300 rounded-xl shadow-sm"
+                className="px-3 py-1 w-2/3 border border-slate-300 rounded-xl shadow-sm"
                 type="number"
                 name="price"
                 value={price}
@@ -133,7 +133,7 @@ function EditProductDetailPage() {
             <div className="flex flex-row items-center my-5">
               <p className="w-1/3">Description</p>
               <textarea
-                className="w-2/3 border border-slate-300 rounded-xl shadow-sm"
+                className="px-3 py-1 w-2/3 border border-slate-300 rounded-xl shadow-sm"
                 type="textarea"
                 name="description"
                 value={description}
