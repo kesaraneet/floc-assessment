@@ -1,12 +1,29 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthProvider";
+
 const NavBar = () => {
+  const navigate = useNavigate();
+  const { auth, setAuth } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("accessToken");
+    setAuth({});
+    navigate("/");
+  };
+
   return (
-    <nav class="flex bg-slate-300 p-6 items-center justify-between">
-      <div class="flex-col items-left  text-slate-700">
-        <p>User: Kesaranee</p>
-        <p>Email: kesaraneet@gmail.com</p>
+    <nav className="flex bg-slate-300 p-6 items-center justify-between">
+      <div className="flex-col items-left  text-slate-700">
+        <p>User: {auth.user_username ? auth.user_username : localStorage.getItem("username")}</p>
+        <p>Email: {auth.email ? auth.email : localStorage.getItem("email")}</p>
       </div>
-      <div class="text-right">
-        <button class="inline-block text-sm mx-3 p-5 py-2 leading-none rounded text-white  bg-slate-400">Logout</button>
+      <div className="text-right">
+        <form onSubmit={handleLogout}>
+          <button className="inline-block text-sm mx-3 p-5 py-2 leading-none rounded text-white  bg-slate-400">Logout</button>
+        </form>
       </div>
     </nav>
   );

@@ -1,15 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import CatalogPage from "./pages/CatalogPage";
+import ProductPage from "./pages/ProductPage";
 import EditProductDetailPage from "./pages/EditProductDetailPage";
+import RequiredAuth from "./components/RequiredAuth";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/products" element={<CatalogPage />} />
-        <Route path="/edit" element={<EditProductDetailPage />} />
+        <Route path="/" index element={<LoginPage />} />
+        {/* Protected Route */}
+        <Route element={<RequiredAuth allowedPermission={["read"]} />}>
+          <Route path="/product" element={<ProductPage />} />
+        </Route>
+        <Route element={<RequiredAuth allowedPermission={["read", "write"]} />}>
+          <Route path="/edit/:id" element={<EditProductDetailPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
