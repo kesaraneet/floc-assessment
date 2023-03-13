@@ -11,23 +11,22 @@ function ProductPage() {
   const [productList, setProductList] = useState([]);
   const [editBtnDisable, setEditBtnDisable] = useState(true);
 
-  async function fetchProductList() {
-    await axios
-      .get("/product", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        setProductList(res?.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   useEffect(() => {
+    async function fetchProductList() {
+      await axios
+        .get("/product", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          setProductList(res?.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     fetchProductList();
   }, []);
 

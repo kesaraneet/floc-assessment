@@ -14,23 +14,28 @@ function EditProductDetailPage() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
 
-  useEffect(
-    () =>
-      async function fetchProduct() {
-        const res = await axios.get(`product/${id}`, {
+  useEffect(() => {
+    async function fetchProduct() {
+      await axios
+        .get(`product/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
+        })
+        .then((res) => {
+          setProductTitleTH(res?.data?.title_th);
+          setProductTitleEN(res?.data?.title_en);
+          setImage(res?.data?.image);
+          setPrice(res?.data?.price);
+          setDescription(res?.data?.description);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        setProductTitleTH(res?.data?.title_th);
-        setProductTitleEN(res?.data?.title_en);
-        setImage(res?.data?.image);
-        setPrice(res?.data?.price);
-        setDescription(res?.data?.description);
-      },
-    []
-  );
+    }
+    fetchProduct();
+  }, [id]);
 
   async function handleRemoveProduct(e, id) {
     e.preventDefault();
@@ -50,8 +55,7 @@ function EditProductDetailPage() {
   async function handleEditProduct(e, id) {
     e.preventDefault();
     try {
-      console.log("edit");
-      const res = await axios.put(
+      await axios.put(
         `product/${id}`,
         {
           title_th: productTitleTH,
@@ -72,16 +76,6 @@ function EditProductDetailPage() {
     }
   }
 
-  async function handlePictureSelected(event) {
-    var picture = event.target.files[0];
-    var src = URL.createObjectURL(picture);
-
-    this.setState({
-      picture: picture,
-      src: src,
-    });
-  }
-
   return (
     <div>
       <NavBar />
@@ -95,7 +89,7 @@ function EditProductDetailPage() {
           {"< Back"}
         </button>
         <div id="product-detail" className="flex flex-col items-center">
-          <img className="h-[30vh] w-auto my-10" src={image}></img>
+          <img className="h-[30vh] w-auto my-10" alt="productImg" src={image}></img>
           <form className="w-[35vw]">
             <div className="flex flex-row items-center my-5">
               <p className="w-1/3">Product Title (Thai)</p>
