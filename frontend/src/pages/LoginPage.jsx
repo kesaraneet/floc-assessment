@@ -13,29 +13,6 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  useEffect(
-    () =>
-      async function verifyToken() {
-        const token = localStorage.getItem("accessToken");
-        if (token) {
-          try {
-            const response = await axios.post(
-              "/auth/verifyToken",
-              { token: localStorage.getItem("accessToken") },
-              { headers: { "Content-Type": "application/json" } }
-            );
-            const accessToken = response?.data?.token;
-            const permission = response?.data?.permission;
-            const email = response?.data?.email;
-            const user_username = response?.data?.username;
-            setAuth({ user_username, password, email, permission, accessToken });
-            navigate("/products");
-          } catch (error) {}
-        }
-      },
-    []
-  );
-
   useEffect(() => {
     setErrMsg("");
   }, [username, password]);
@@ -61,6 +38,7 @@ function LoginPage() {
       setAuth({ user_username, password, email, permission, accessToken });
       setUsername("");
       setPassword("");
+
       navigate("/products");
     } catch (error) {
       console.log(error);
