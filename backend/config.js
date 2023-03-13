@@ -30,7 +30,7 @@ export default {
     type: TYPE,
     project_id: PROJECT_ID,
     private_key_id: PRIVATE_KEY_ID,
-    private_key: PRIVATE_KEY ? PRIVATE_KEY.replace(/\\n/gm, "\n") : undefined,
+    private_key: PRIVATE_KEY ? PRIVATE_KEY.split(String.raw`\n`).join("\n") : undefined,
     client_email: CLIENT_EMAIL,
     client_id: CLIENT_ID,
     auth_uri: AUTH_URI,
