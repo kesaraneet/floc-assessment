@@ -11,19 +11,25 @@ function ProductPage() {
   const [productList, setProductList] = useState([]);
   const [editBtnDisable, setEditBtnDisable] = useState(true);
 
-  useEffect(
-    () =>
-      async function fetchProductList() {
-        const res = await axios.get("/product", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+  async function fetchProductList() {
+    await axios
+      .get("/product", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
         setProductList(res?.data);
-      },
-    []
-  );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    fetchProductList();
+  }, []);
 
   useEffect(() => {
     const EDIT_PRODUCT_PERMISSION = ["read", "write"];
