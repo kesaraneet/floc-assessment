@@ -1,0 +1,27 @@
+{
+  "name": "floc",
+  "version": "1.0.0",
+  "description": "\"# floc-assessment\"",
+  "main": "algorithm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && nodemon index.js",
+    "start": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run frontend\"",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kesaraneet/floc-assessment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kesaraneet/floc-assessment/issues"
+  },
+  "homepage": "https://github.com/kesaraneet/floc-assessment#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.21"
+  }
+}
