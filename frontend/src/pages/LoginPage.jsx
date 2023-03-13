@@ -29,7 +29,7 @@ function LoginPage() {
             const email = response?.data?.email;
             const user_username = response?.data?.username;
             setAuth({ user_username, password, email, permission, accessToken });
-            navigate("/product");
+            navigate("/products");
           } catch (error) {}
         }
       },
@@ -61,7 +61,7 @@ function LoginPage() {
       setAuth({ user_username, password, email, permission, accessToken });
       setUsername("");
       setPassword("");
-      navigate("/product");
+      navigate("/products");
     } catch (error) {
       console.log(error);
       if (!error?.response) {

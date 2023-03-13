@@ -9,7 +9,7 @@ function RequiredAuth({ allowedPermission }) {
   return isAuthorized ? (
     <Outlet />
   ) : auth?.accessToken ? (
-    <Navigate to="/product" />
+    <Navigate to="/products" />
   ) : (
     <Navigate to="/" state={{ from: location }} replcae />
   );
