@@ -11,7 +11,7 @@ function App() {
         <Route path="/" index element={<LoginPage />} />
 
         <Route element={<RequiredAuth allowedPermission={["read"]} />}>
-          <Route path="/product" element={<ProductPage />} />
+          <Route path="/products" element={<ProductPage />} />
         </Route>
 
         <Route element={<RequiredAuth allowedPermission={["read", "write"]} />}>
