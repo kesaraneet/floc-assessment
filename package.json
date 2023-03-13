@@ -5,8 +5,8 @@
   "main": "algorithm.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "frontend": "cd frontend && npm install && npm start",
-    "backend": "cd backend && npm install && nodemon index.js",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && nodemon index.js",
     "start": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run frontend\"",
     "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
@@ -21,7 +21,15 @@
   },
   "homepage": "https://github.com/kesaraneet/floc-assessment#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "firebase": "^9.17.2",
+    "firebase-admin": "^11.5.0",
+    "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.21"
   }
 }
